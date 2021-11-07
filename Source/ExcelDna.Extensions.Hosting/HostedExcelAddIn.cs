@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using ExcelDna.Integration;
-using ExcelDna.Registration;
+﻿using ExcelDna.Integration;
 using Microsoft.Extensions.Hosting;
 
 namespace ExcelDna.Extensions.Hosting
@@ -11,14 +9,9 @@ namespace ExcelDna.Extensions.Hosting
 
         protected abstract IHostBuilder CreateHostBuilder();
 
-        protected virtual IEnumerable<ExcelFunctionRegistration> GetExcelFunctions() => ServiceProviderRegistration.GetExcelFunctions(_host.Services);
-
-        internal virtual void RegisterFunctions(IEnumerable<ExcelFunctionRegistration> registrationEntries) => registrationEntries.RegisterFunctions();
-
         void IExcelAddIn.AutoOpen()
         {
             _host = CreateHostBuilder().Build();
-            RegisterFunctions(GetExcelFunctions());
             _host.StartAsync().GetAwaiter().GetResult();
         }
 

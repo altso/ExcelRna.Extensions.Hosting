@@ -44,11 +44,6 @@ namespace ExcelDna.Extensions.Hosting.Tests
 
             protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
                 .ConfigureServices(services => services.AddHostedService(_ => this));
-
-            internal override void RegisterFunctions(IEnumerable<ExcelFunctionRegistration> registrationEntries)
-            {
-                // noop as real implementation requires Excel
-            }
         }
     }
 }

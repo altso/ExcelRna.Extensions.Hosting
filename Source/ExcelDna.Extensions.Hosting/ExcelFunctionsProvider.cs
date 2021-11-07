@@ -9,13 +9,20 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExcelDna.Extensions.Hosting
 {
-    public static class ServiceProviderRegistration
+    public class ExcelFunctionsProvider : IExcelFunctionsProvider
     {
-        public static IEnumerable<ExcelFunctionRegistration> GetExcelFunctions(IServiceProvider serviceProvider) =>
-            from declaration in serviceProvider.GetRequiredService<IEnumerable<IExcelFunctionsDeclaration>>()
+        private readonly IServiceProvider _serviceProvider;
+
+        public ExcelFunctionsProvider(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public IEnumerable<ExcelFunctionRegistration> GetExcelFunctions() =>
+            from declaration in _serviceProvider.GetRequiredService<IEnumerable<IExcelFunctionsDeclaration>>()
             from methodInfo in declaration.ExcelFunctionsType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
             where methodInfo.GetCustomAttribute<ExcelFunctionAttribute>() != null
-            select new ExcelFunctionRegistration(WrapInstanceMethod(methodInfo, serviceProvider));
+            select new ExcelFunctionRegistration(WrapInstanceMethod(methodInfo, _serviceProvider));
 
         internal static LambdaExpression WrapInstanceMethod(MethodInfo method, IServiceProvider serviceProvider)
         {

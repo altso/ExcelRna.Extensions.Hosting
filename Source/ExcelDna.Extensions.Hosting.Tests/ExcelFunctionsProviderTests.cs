@@ -9,7 +9,7 @@ using Xunit;
 
 namespace ExcelDna.Extensions.Hosting.Tests
 {
-    public class ServiceProviderRegistrationTests
+    public class ExcelFunctionsProviderTests
     {
         [Fact]
         public void WrapInstanceMethod_should_create_lambda()
@@ -21,7 +21,7 @@ namespace ExcelDna.Extensions.Hosting.Tests
                 .BuildServiceProvider();
 
             // ACT
-            LambdaExpression lambda = ServiceProviderRegistration.WrapInstanceMethod(methodInfo, serviceProvider);
+            LambdaExpression lambda = ExcelFunctionsProvider.WrapInstanceMethod(methodInfo, serviceProvider);
 
             // ASSERT
             var d = lambda.Compile();
@@ -34,12 +34,16 @@ namespace ExcelDna.Extensions.Hosting.Tests
         {
             // ARRANGE
             var serviceProvider = new ServiceCollection()
-                .AddExcelFunctions<TestFunctionsA>()
-                .AddExcelFunctions<TestFunctionsB>()
+                .AddExcelFunctions(functions =>
+                {
+                    functions.AddFrom<TestFunctionsA>();
+                    functions.AddFrom<TestFunctionsB>();
+                })
                 .BuildServiceProvider();
+            var functionsProvider = new ExcelFunctionsProvider(serviceProvider);
 
             // ACT
-            List<ExcelFunctionRegistration> registrations = ServiceProviderRegistration.GetExcelFunctions(serviceProvider).ToList();
+            List<ExcelFunctionRegistration> registrations = functionsProvider.GetExcelFunctions().ToList();
 
             // ASSERT
             Assert.Collection(registrations,

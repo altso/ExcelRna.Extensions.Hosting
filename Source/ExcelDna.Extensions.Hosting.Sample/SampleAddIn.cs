@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using ExcelDna.Registration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using ExcelDna.Registration;
 using Microsoft.Extensions.Hosting;
 
 namespace ExcelDna.Extensions.Hosting.Sample
@@ -10,11 +8,12 @@ namespace ExcelDna.Extensions.Hosting.Sample
         protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
-                services.AddHostedService<IntelliSenseHostedService>();
-                services.AddExcelFunctions<SampleFunctions>();
+                services.AddExcelFunctions(functions =>
+                {
+                    functions.ConfigureRegistrations(registrations => registrations.ProcessAsyncRegistrations());
+                    functions.AddIntelliSense();
+                    functions.AddFrom<SampleFunctions>();
+                });
             });
-
-        protected override IEnumerable<ExcelFunctionRegistration> GetExcelFunctions() => base.GetExcelFunctions()
-            .ProcessAsyncRegistrations();
     }
 }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace ExcelDna.Extensions.Hosting.Tests
 {
-    public class ExcelFunctionsServiceCollectionExtensionsTests
+    public class ExcelFunctionsBuilderExtensionsTests
     {
         [Fact]
         public void AddExcelFunctions_should_add_functions_type()
@@ -13,8 +13,11 @@ namespace ExcelDna.Extensions.Hosting.Tests
             var services = new ServiceCollection();
 
             // ACT
-            services.AddExcelFunctions<TestFunctionsA>();
-            services.AddExcelFunctions<TestFunctionsB>();
+            services.AddExcelFunctions(functions =>
+            {
+                functions.AddFrom<TestFunctionsA>();
+                functions.AddFrom<TestFunctionsB>();
+            });
 
             // ASSERT
             var provider = services.BuildServiceProvider();

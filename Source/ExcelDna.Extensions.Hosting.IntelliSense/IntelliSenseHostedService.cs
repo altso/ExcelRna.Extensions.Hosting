@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using ExcelDna.IntelliSense;
 using Microsoft.Extensions.Hosting;
 
-namespace ExcelDna.Extensions.Hosting.Sample
+namespace ExcelDna.Extensions.Hosting
 {
-    public class IntelliSenseHostedService : IHostedService
+    internal class IntelliSenseHostedService : IHostedService
     {
         public Task StartAsync(CancellationToken cancellationToken)
         {

@@ -7,25 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExcelDna.Extensions.Hosting.IntelliSense\ExcelDna.Extensions.Hosting.IntelliSense.csproj" />
     <ProjectReference Include="..\ExcelDna.Extensions.Hosting\ExcelDna.Extensions.Hosting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ExcelDna.AddIn" Version="1.5.0" />
-    <PackageReference Include="ExcelDna.IntelliSense" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
 
   <Target Name="ExcelDnaIncludeReferences" DependsOnTargets="ExcelDnaBuild" BeforeTargets="ExcelDnaPack">
     <!-- read existing content -->
-    <XmlPeek XmlInputPath="%(ExcelDnaFilesToPack.OutputDnaFileName)" Query="//*[local-name()=&quot;DnaLibrary&quot;]/*" >
+    <XmlPeek XmlInputPath="%(ExcelDnaFilesToPack.OutputDnaFileName)" Query="//*[local-name()=&quot;DnaLibrary&quot;]/*">
       <Output TaskParameter="Result" PropertyName="Peeked" />
     </XmlPeek>
 
     <!-- find all dependencies -->
     <ItemGroup>
-      <ExcelDnaReferences Include="@(ReferenceCopyLocalPaths->'&lt;Reference Path=&quot;%(Filename)%(Extension)&quot; Pack=&quot;true&quot; /&gt;')"
-                          Condition="'%(Extension)' == '.dll'" />
+      <ExcelDnaReferences Include="@(ReferenceCopyLocalPaths->'&lt;Reference Path=&quot;%(Filename)%(Extension)&quot; Pack=&quot;true&quot; /&gt;')" Condition="'%(Extension)' == '.dll'" />
     </ItemGroup>
 
     <!-- combine existing content with the required dependencies -->
