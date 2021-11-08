@@ -4,6 +4,7 @@
     <TargetFramework>net461</TargetFramework>
     <ExcelDnaAllowPackageReferenceProjectStyle>true</ExcelDnaAllowPackageReferenceProjectStyle>
     <RunExcelDnaSetDebuggerOptions>false</RunExcelDnaSetDebuggerOptions>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
