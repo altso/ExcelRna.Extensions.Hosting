@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Xunit;
 
 namespace ExcelDna.Extensions.Hosting.Tests
@@ -27,11 +29,37 @@ namespace ExcelDna.Extensions.Hosting.Tests
                 b => Assert.Equal(typeof(TestFunctionsB), b.ExcelFunctionsType));
         }
 
+        [Fact]
+        public void AddExcelRibbon_should_add_loader()
+        {
+            // ARRANGE
+            var services = new ServiceCollection();
+
+            // ACT
+            services.AddExcelRibbon<TestRibbonA>();
+            services.AddExcelRibbon<TestRibbonB>();
+
+            // ASSERT
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            Assert.Single(serviceProvider.GetRequiredService<IEnumerable<IHostedService>>().OfType<ExcelRibbonLoader>());
+            Assert.Collection(serviceProvider.GetRequiredService<IEnumerable<HostedExcelRibbon>>(),
+                a => Assert.IsType<TestRibbonA>(a),
+                b => Assert.IsType<TestRibbonB>(b));
+        }
+
         private class TestFunctionsA
         {
         }
 
         private class TestFunctionsB
+        {
+        }
+
+        private class TestRibbonA : HostedExcelRibbon
+        {
+        }
+
+        private class TestRibbonB : HostedExcelRibbon
         {
         }
     }

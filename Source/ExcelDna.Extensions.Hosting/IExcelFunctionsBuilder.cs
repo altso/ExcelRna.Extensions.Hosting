@@ -30,6 +30,14 @@ namespace ExcelDna.Extensions.Hosting
             return services;
         }
 
+        public static IServiceCollection AddExcelRibbon<T>(this IServiceCollection services)
+            where T : HostedExcelRibbon
+        {
+            services.AddHostedService<ExcelRibbonLoader>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<HostedExcelRibbon, T>());
+            return services;
+        }
+
         public static IExcelFunctionsBuilder ConfigureRegistrations(this IExcelFunctionsBuilder builder, Func<IEnumerable<ExcelFunctionRegistration>, IEnumerable<ExcelFunctionRegistration>> configure)
         {
             builder.Services.Configure<ExcelFunctionRegistrationOptions>(options => options.Configure = configure);

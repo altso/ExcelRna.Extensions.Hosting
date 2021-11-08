@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
-using ExcelDna.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Xunit;

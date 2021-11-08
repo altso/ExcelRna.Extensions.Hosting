@@ -16,6 +16,10 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
   <Target Name="ExcelDnaIncludeReferences" DependsOnTargets="ExcelDnaBuild" BeforeTargets="ExcelDnaPack">
     <!-- read existing content -->
     <XmlPeek XmlInputPath="%(ExcelDnaFilesToPack.OutputDnaFileName)" Query="//*[local-name()=&quot;DnaLibrary&quot;]/*">
