@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ExcelDna.Extensions.Hosting
 {
-    public class ExcelRibbonLoader : IHostedService
+    internal class ExcelRibbonLoader : IHostedService
     {
         private readonly IEnumerable<HostedExcelRibbon> _excelRibbons;
 

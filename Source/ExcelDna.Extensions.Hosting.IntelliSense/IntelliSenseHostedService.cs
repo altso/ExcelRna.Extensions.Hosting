@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ExcelDna.IntelliSense;
 using Microsoft.Extensions.Hosting;
 
-namespace ExcelDna.Extensions.Hosting
+namespace ExcelDna.Extensions.Hosting.IntelliSense
 {
     internal class IntelliSenseHostedService : IHostedService
     {

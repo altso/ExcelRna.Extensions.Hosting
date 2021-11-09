@@ -34,11 +34,8 @@ namespace ExcelDna.Extensions.Hosting.Tests
         {
             // ARRANGE
             var serviceProvider = new ServiceCollection()
-                .AddExcelFunctions(functions =>
-                {
-                    functions.AddFrom<TestFunctionsA>();
-                    functions.AddFrom<TestFunctionsB>();
-                })
+                .AddExcelFunctions<TestFunctionsA>()
+                .AddExcelFunctions<TestFunctionsB>()
                 .BuildServiceProvider();
             var functionsProvider = new ExcelFunctionsProvider(serviceProvider);
 

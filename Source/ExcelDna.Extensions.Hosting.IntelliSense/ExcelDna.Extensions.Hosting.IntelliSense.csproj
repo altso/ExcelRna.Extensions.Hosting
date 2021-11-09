@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
-    <RootNamespace>ExcelDna.Extensions.Hosting</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,11 +5,11 @@ using ExcelDna.Integration.CustomUI;
 namespace ExcelDna.Extensions.Hosting.Sample
 {
     [ComVisible(true)]
-    public class RibbonController : HostedExcelRibbon
+    public class RibbonB : HostedExcelRibbon
     {
         private readonly ICustomService _customService;
 
-        public RibbonController(ICustomService customService) => _customService = customService;
+        public RibbonB(ICustomService customService) => _customService = customService;
 
         public override string GetCustomUI(string ribbonId)
         {
@@ -17,7 +17,7 @@ namespace ExcelDna.Extensions.Hosting.Sample
           <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui'>
           <ribbon>
             <tabs>
-              <tab id='tab1' label='My Tab'>
+              <tab id='tab1' label='Ribbon B'>
                 <group id='group1' label='My Group'>
                   <button id='button1' label='My Button' onAction='OnButtonPressed'/>
                 </group >
