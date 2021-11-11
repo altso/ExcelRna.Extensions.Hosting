@@ -4,7 +4,7 @@ namespace ExcelDna.Extensions.Hosting.IntelliSense;
 
 public static class IntelliSenseServiceCollectionExtensions
 {
-    public static IServiceCollection AddExcelFunctionsIntelliSense(this IServiceCollection services)
+    public static IServiceCollection AddExcelIntelliSenseServer(this IServiceCollection services)
     {
         return services.AddHostedService<IntelliSenseHostedService>();
     }

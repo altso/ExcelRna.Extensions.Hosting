@@ -17,16 +17,16 @@ public class QuickStartAddIn : HostedExcelAddIn
         {
             services.AddTransient<IQuickStartService, QuickStartService>();
 
-            services.AddExcelFunctionsProcessors(functions => functions
+            services.AddExcelFunctionsProcessor(functions => functions
                 .ProcessParamsRegistrations()
                 .ProcessAsyncRegistrations()
             );
 
+            services.AddExcelRibbon<QuickStartRibbon>();
+
             services.AddExcelFunctions<QuickStartFunctions>();
 
-            services.AddExcelFunctionsIntelliSense();
-
-            services.AddExcelRibbon<QuickStartRibbon>();
+            services.AddExcelIntelliSenseServer();
         });
 }
 

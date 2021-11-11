@@ -28,8 +28,15 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddExcelFunctionsProcessors(this IServiceCollection services, Func<IEnumerable<ExcelFunctionRegistration>, IEnumerable<ExcelFunctionRegistration>> process)
+    public static IServiceCollection AddExcelFunctionsProcessor(this IServiceCollection services, Func<IEnumerable<ExcelFunctionRegistration>, IEnumerable<ExcelFunctionRegistration>> process)
     {
-        return services.AddSingleton<IExcelFunctionsProcessor>(new ExcelFunctionsProcessor(process));
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IExcelFunctionsProcessor>(new ExcelFunctionsProcessor(process)));
+        return services;
+    }
+
+    public static IServiceCollection AddExcelFunctionsProcessor(this IServiceCollection services, Func<IEnumerable<ExcelFunctionRegistration>, IServiceProvider, IEnumerable<ExcelFunctionRegistration>> process)
+    {
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IExcelFunctionsProcessor>(provider => new ExcelFunctionsProcessor(functions => process(functions, provider))));
+        return services;
     }
 }
