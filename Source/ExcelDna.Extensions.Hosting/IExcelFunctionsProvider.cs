@@ -23,11 +23,35 @@ internal class ExcelFunctionsProvider : IExcelFunctionsProvider
         _serviceProvider = serviceProvider;
     }
 
-    public IEnumerable<ExcelFunctionRegistration> GetExcelFunctions() =>
-        from declaration in _serviceProvider.GetRequiredService<IEnumerable<IExcelFunctionsDeclaration>>()
-        from methodInfo in declaration.ExcelFunctionsType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-        where methodInfo.GetCustomAttribute<ExcelFunctionAttribute>() != null
-        select new ExcelFunctionRegistration(WrapInstanceMethod(methodInfo, _serviceProvider));
+    public IEnumerable<ExcelFunctionRegistration> GetExcelFunctions()
+    {
+        foreach (var declaration in _serviceProvider.GetRequiredService<IEnumerable<IExcelFunctionsDeclaration>>())
+        {
+            foreach (MethodInfo methodInfo in declaration.ExcelFunctionsType.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (TryCreateFunctionRegistration(methodInfo, _serviceProvider, out var registration))
+                {
+                    yield return registration;
+                }
+            }
+        }
+    }
+
+    private static bool TryCreateFunctionRegistration(MethodInfo methodInfo, IServiceProvider serviceProvider, out ExcelFunctionRegistration registration)
+    {
+        ExcelFunctionAttribute excelFunctionAttribute = methodInfo.GetCustomAttribute<ExcelFunctionAttribute>();
+        if (excelFunctionAttribute != null)
+        {
+            var lambda = WrapInstanceMethod(methodInfo, serviceProvider);
+            excelFunctionAttribute.Name ??= lambda.Name;
+            var parameters = methodInfo.GetParameters().Select(p => new ExcelParameterRegistration(p));
+            registration = new ExcelFunctionRegistration(lambda, excelFunctionAttribute, parameters);
+            return true;
+        }
+
+        registration = null;
+        return false;
+    }
 
     internal static LambdaExpression WrapInstanceMethod(MethodInfo method, IServiceProvider serviceProvider)
     {

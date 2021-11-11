@@ -45,8 +45,14 @@ public class ExcelFunctionsProviderTests
         // ASSERT
         Assert.Collection(registrations,
             a => Assert.Equal(nameof(TestFunctionsA.FunctionA1), a.FunctionAttribute.Name),
-            a => Assert.Equal(nameof(TestFunctionsA.FunctionA2), a.FunctionAttribute.Name),
-            b => Assert.Equal(nameof(TestFunctionsB.FunctionB1), b.FunctionAttribute.Name));
+            a => Assert.Equal("CustomFunctionA2", a.FunctionAttribute.Name),
+            b =>
+            {
+                Assert.Equal(nameof(TestFunctionsB.FunctionB1), b.FunctionAttribute.Name);
+                Assert.Collection(b.ParameterRegistrations,
+                    p => Assert.Equal("p1", p.ArgumentAttribute.Name),
+                    p => Assert.Equal("p2", p.ArgumentAttribute.Name));
+            });
     }
 
     private class TestFixture
@@ -56,17 +62,17 @@ public class ExcelFunctionsProviderTests
 
     private class TestFunctionsA
     {
-        [ExcelFunction]
+        [ExcelFunction("DescriptionA1")]
         public int FunctionA1() => default;
 
-        [ExcelFunction]
+        [ExcelFunction(Name = "CustomFunctionA2")]
         public string FunctionA2() => default;
     }
 
     private class TestFunctionsB
     {
         [ExcelFunction]
-        public DateTime FunctionB1(int a, string b) => default;
+        public DateTime FunctionB1(int p1, string p2) => default;
 
         [ExcelFunction]
         public static object IgnoredFunction() => default;
