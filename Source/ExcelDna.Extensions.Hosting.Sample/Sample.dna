@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<DnaLibrary Name="ExcelDna.Extensions.Hosting.Sample" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2018/05/dnalibrary">
-  <ExternalLibrary Path="ExcelDna.Extensions.Hosting.Sample.dll" ExplicitRegistration="true" ExplicitExports="false" LoadFromBytes="true" Pack="true" IncludePdb="false" />
-</DnaLibrary>

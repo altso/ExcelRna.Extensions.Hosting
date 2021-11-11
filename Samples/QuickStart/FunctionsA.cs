@@ -1,6 +1,6 @@
 using ExcelDna.Integration;
 
-namespace ExcelDna.Extensions.Hosting.Sample
+namespace QuickStart
 {
     public class FunctionsA
     {

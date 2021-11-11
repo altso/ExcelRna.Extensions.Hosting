@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExcelDna.Extensions.Hosting.IntelliSense\ExcelDna.Extensions.Hosting.IntelliSense.csproj" />
-    <ProjectReference Include="..\ExcelDna.Extensions.Hosting\ExcelDna.Extensions.Hosting.csproj" />
+    <ProjectReference Include="..\..\Source\ExcelDna.Extensions.Hosting.IntelliSense\ExcelDna.Extensions.Hosting.IntelliSense.csproj" />
+    <ProjectReference Include="..\..\Source\ExcelDna.Extensions.Hosting\ExcelDna.Extensions.Hosting.csproj" />
   </ItemGroup>
 
   <ItemGroup>

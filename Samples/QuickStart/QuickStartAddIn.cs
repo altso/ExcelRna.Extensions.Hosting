@@ -1,11 +1,12 @@
-﻿using ExcelDna.Extensions.Hosting.IntelliSense;
+﻿using ExcelDna.Extensions.Hosting;
+using ExcelDna.Extensions.Hosting.IntelliSense;
 using ExcelDna.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ExcelDna.Extensions.Hosting.Sample
+namespace QuickStart
 {
-    public class SampleAddIn : HostedExcelAddIn
+    public class QuickStartAddIn : HostedExcelAddIn
     {
         protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
             .ConfigureServices(services =>

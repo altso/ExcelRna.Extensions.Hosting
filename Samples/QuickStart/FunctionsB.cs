@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
 
-namespace ExcelDna.Extensions.Hosting.Sample
+namespace QuickStart
 {
     public class FunctionsB
     {

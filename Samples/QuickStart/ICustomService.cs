@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace ExcelDna.Extensions.Hosting.Sample
+namespace QuickStart
 {
     public interface ICustomService
     {
