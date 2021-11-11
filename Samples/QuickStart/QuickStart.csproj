@@ -4,7 +4,6 @@
     <TargetFramework>net461</TargetFramework>
     <ExcelDnaAllowPackageReferenceProjectStyle>true</ExcelDnaAllowPackageReferenceProjectStyle>
     <RunExcelDnaSetDebuggerOptions>false</RunExcelDnaSetDebuggerOptions>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="ExcelDna.AddIn" Version="1.5.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
