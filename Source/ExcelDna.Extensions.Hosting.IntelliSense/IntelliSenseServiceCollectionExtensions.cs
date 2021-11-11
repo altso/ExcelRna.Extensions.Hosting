@@ -1,12 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExcelDna.Extensions.Hosting.IntelliSense
+namespace ExcelDna.Extensions.Hosting.IntelliSense;
+
+public static class IntelliSenseServiceCollectionExtensions
 {
-    public static class IntelliSenseServiceCollectionExtensions
+    public static IServiceCollection AddExcelFunctionsIntelliSense(this IServiceCollection services)
     {
-        public static IServiceCollection AddExcelFunctionsIntelliSense(this IServiceCollection services)
-        {
-            return services.AddHostedService<IntelliSenseHostedService>();
-        }
+        return services.AddHostedService<IntelliSenseHostedService>();
     }
 }

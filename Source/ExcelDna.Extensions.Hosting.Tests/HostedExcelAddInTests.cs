@@ -5,43 +5,42 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Xunit;
 
-namespace ExcelDna.Extensions.Hosting.Tests
+namespace ExcelDna.Extensions.Hosting.Tests;
+
+public class HostedExcelAddInTests
 {
-    public class HostedExcelAddInTests
+    [Fact]
+    public void HostedExcelAddIn_should_start_and_stop_host()
     {
-        [Fact]
-        public void HostedExcelAddIn_should_start_and_stop_host()
+        // ARRANGE
+        var testExcelAddIn = new TestExcelAddIn();
+        IExcelAddIn addIn = testExcelAddIn;
+
+        // ACT & ASSERT
+        addIn.AutoOpen();
+        Assert.True(testExcelAddIn.IsRunning);
+
+        addIn.AutoClose();
+        Assert.False(testExcelAddIn.IsRunning);
+    }
+
+    private class TestExcelAddIn : HostedExcelAddIn, IHostedService
+    {
+        public bool IsRunning { get; private set; }
+
+        public Task StartAsync(CancellationToken cancellationToken)
         {
-            // ARRANGE
-            var testExcelAddIn = new TestExcelAddIn();
-            IExcelAddIn addIn = testExcelAddIn;
-
-            // ACT & ASSERT
-            addIn.AutoOpen();
-            Assert.True(testExcelAddIn.IsRunning);
-
-            addIn.AutoClose();
-            Assert.False(testExcelAddIn.IsRunning);
+            IsRunning = true;
+            return Task.CompletedTask;
         }
 
-        private class TestExcelAddIn : HostedExcelAddIn, IHostedService
+        public Task StopAsync(CancellationToken cancellationToken)
         {
-            public bool IsRunning { get; private set; }
-
-            public Task StartAsync(CancellationToken cancellationToken)
-            {
-                IsRunning = true;
-                return Task.CompletedTask;
-            }
-
-            public Task StopAsync(CancellationToken cancellationToken)
-            {
-                IsRunning = false;
-                return Task.CompletedTask;
-            }
-
-            protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
-                .ConfigureServices(services => services.AddHostedService(_ => this));
+            IsRunning = false;
+            return Task.CompletedTask;
         }
+
+        protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
+            .ConfigureServices(services => services.AddHostedService(_ => this));
     }
 }
