@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ExcelDna.Registration;
@@ -10,19 +10,21 @@ namespace ExcelDna.Extensions.Hosting;
 internal class ExcelFunctionsRegistrar : IHostedService
 {
     private readonly IExcelFunctionsProvider _excelFunctionsProvider;
-    private readonly IEnumerable<IExcelFunctionsProcessor> _excelFunctionsProcessors;
+    private readonly IExcelFunctionsProcessor _excelFunctionsProcessor;
 
-    public ExcelFunctionsRegistrar(IExcelFunctionsProvider excelFunctionsProvider, IEnumerable<IExcelFunctionsProcessor> excelFunctionsProcessors)
+    internal Action<IEnumerable<ExcelFunctionRegistration>> RegisterFunctions { get; set; } = functions => functions.RegisterFunctions();
+
+    public ExcelFunctionsRegistrar(IExcelFunctionsProvider excelFunctionsProvider, IExcelFunctionsProcessor excelFunctionsProcessor)
     {
         _excelFunctionsProvider = excelFunctionsProvider;
-        _excelFunctionsProcessors = excelFunctionsProcessors;
+        _excelFunctionsProcessor = excelFunctionsProcessor;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _excelFunctionsProcessors
-            .Aggregate(_excelFunctionsProvider.GetExcelFunctions(), (functions, processor) => processor.Process(functions))
-            .RegisterFunctions();
+        IEnumerable<ExcelFunctionRegistration> functions = _excelFunctionsProcessor
+            .Process(_excelFunctionsProvider.GetExcelFunctions());
+        RegisterFunctions(functions);
         return Task.CompletedTask;
     }
 

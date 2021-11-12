@@ -17,7 +17,7 @@ public class HostedExcelRibbonTests
 
     private static bool IsRibbonType(Type type)
     {
-        return (bool)s_isRibbonTypeMethod.Invoke(null, new object[] {type});
+        return (bool)s_isRibbonTypeMethod.Invoke(null, new object[] { type });
     }
 
     private class TestExcelRibbon : HostedExcelRibbon

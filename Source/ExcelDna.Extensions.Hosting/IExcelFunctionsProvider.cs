@@ -65,7 +65,7 @@ internal class ExcelFunctionsProvider : IExcelFunctionsProvider
         MethodInfo getRequiredServiceMethod =
             typeof(ServiceProviderServiceExtensions).GetMethod(
                 nameof(ServiceProviderServiceExtensions.GetRequiredService),
-                new[] {typeof(IServiceProvider), typeof(Type)})
+                new[] { typeof(IServiceProvider), typeof(Type) })
             ?? throw new InvalidOperationException();
         var instanceObject = Expression.Call(null, getRequiredServiceMethod, provider, Expression.Constant(functionsType));
         var instance = Expression.Convert(instanceObject, functionsType);
