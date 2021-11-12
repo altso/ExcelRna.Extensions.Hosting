@@ -20,6 +20,8 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Restore tools
+      run: dotnet tool restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
@@ -30,3 +32,5 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         verbose: true
+    - name: Verify Format
+      run: dotnet format  --verify-no-changes --verbosity detailed
