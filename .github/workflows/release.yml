@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    defaults:
+      run:
+        working-directory: Source
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Set VERSION variable from tag
+      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+    - name: Pack
+      run: dotnet pack --configuration Release --output . /p:Version=${VERSION}
+    - name: Publish
+      run: |
+        for file in *.nupkg; do
+          dotnet nuget push $file --api-key ${NUGET_API_KEY} --source https://api.nuget.org/v3/index.json;
+        done
