@@ -30,13 +30,11 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddExcelFunctionsProcessor(this IServiceCollection services, Func<IEnumerable<ExcelFunctionRegistration>, IEnumerable<ExcelFunctionRegistration>> process)
     {
-        services.TryAddEnumerable(ServiceDescriptor.Singleton<IExcelFunctionsProcessor>(new ExcelFunctionsProcessor(process)));
-        return services;
+        return services.AddSingleton<IExcelFunctionsProcessor>(new ExcelFunctionsProcessor(process));
     }
 
     public static IServiceCollection AddExcelFunctionsProcessor(this IServiceCollection services, Func<IEnumerable<ExcelFunctionRegistration>, IServiceProvider, IEnumerable<ExcelFunctionRegistration>> process)
     {
-        services.TryAddEnumerable(ServiceDescriptor.Singleton<IExcelFunctionsProcessor>(provider => new ExcelFunctionsProcessor(functions => process(functions, provider))));
-        return services;
+        return services.AddSingleton<IExcelFunctionsProcessor>(provider => new ExcelFunctionsProcessor(functions => process(functions, provider)));
     }
 }

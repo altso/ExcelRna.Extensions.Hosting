@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using ExcelDna.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Xunit;
@@ -44,6 +46,23 @@ public class ServiceCollectionExtensionsTests
             b => Assert.IsType<TestRibbonB>(b));
     }
 
+    [Fact]
+    public void AddExcelFunctionsProcessor_should_add_processor()
+    {
+        // ARRANGE
+        var services = new ServiceCollection();
+        services.AddTransient<TestDependency>();
+
+        // ACT
+        services.AddExcelFunctionsProcessor(functions => functions);
+        services.AddExcelFunctionsProcessor((functions, provider) => functions.Concat(new[] { provider.GetRequiredService<TestDependency>().Registration }));
+
+        // ASSERT
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        IExcelFunctionsProcessor processor = serviceProvider.GetRequiredService<IExcelFunctionsProcessor>();
+        Assert.Single(processor.Process(Enumerable.Empty<ExcelFunctionRegistration>()));
+    }
+
     private class TestFunctionsA
     {
     }
@@ -58,5 +77,10 @@ public class ServiceCollectionExtensionsTests
 
     private class TestRibbonB : HostedExcelRibbon
     {
+    }
+
+    private class TestDependency
+    {
+        public ExcelFunctionRegistration Registration { get; } = new(Expression.Lambda(Expression.Constant(null)));
     }
 }
