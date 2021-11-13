@@ -4,7 +4,7 @@ using ExcelDna.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 public static class ServiceCollectionExtensions
 {

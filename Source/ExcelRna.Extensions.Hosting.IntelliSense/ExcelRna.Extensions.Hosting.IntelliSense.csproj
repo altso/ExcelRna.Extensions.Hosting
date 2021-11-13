@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExcelDna.Extensions.Hosting\ExcelDna.Extensions.Hosting.csproj" />
+    <ProjectReference Include="..\ExcelRna.Extensions.Hosting\ExcelRna.Extensions.Hosting.csproj" />
   </ItemGroup>
 
 </Project>

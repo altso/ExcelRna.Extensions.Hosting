@@ -1,6 +1,6 @@
 using ExcelDna.Integration.CustomUI;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 public class HostedExcelRibbon : ExcelRibbon
 {

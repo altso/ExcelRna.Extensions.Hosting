@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ExcelDna.Registration;
 using Microsoft.Extensions.Hosting;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 internal class ExcelFunctionsRegistrar : IHostedService
 {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Moq;
 using Xunit;
 
-namespace ExcelDna.Extensions.Hosting.Tests;
+namespace ExcelRna.Extensions.Hosting.Tests;
 
 public class ExcelFunctionsRegistrarTests
 {

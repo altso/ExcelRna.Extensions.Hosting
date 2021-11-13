@@ -3,7 +3,7 @@ using System.Linq;
 using ExcelDna.Registration;
 using Xunit;
 
-namespace ExcelDna.Extensions.Hosting.Tests;
+namespace ExcelRna.Extensions.Hosting.Tests;
 
 public class ExcelFunctionProcessorTests
 {

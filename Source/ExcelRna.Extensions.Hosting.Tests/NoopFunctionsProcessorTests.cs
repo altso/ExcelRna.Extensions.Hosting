@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ExcelDna.Registration;
 using Xunit;
 
-namespace ExcelDna.Extensions.Hosting.Tests;
+namespace ExcelRna.Extensions.Hosting.Tests;
 
 public class NoopFunctionsProcessorTests
 {

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="ExcelDna.Extensions.Hosting.Tests" />
+    <InternalsVisibleTo Include="ExcelRna.Extensions.Hosting.Tests" />
     <!-- make Moq happy -->
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>

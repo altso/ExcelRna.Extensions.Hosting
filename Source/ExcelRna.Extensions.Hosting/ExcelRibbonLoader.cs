@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ExcelDna.Integration;
 using Microsoft.Extensions.Hosting;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 internal class ExcelRibbonLoader : IHostedService
 {

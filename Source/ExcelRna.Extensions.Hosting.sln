@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDna.Extensions.Hosting", "ExcelDna.Extensions.Hosting\ExcelDna.Extensions.Hosting.csproj", "{5777352D-8EC8-4E29-ABAA-785810F365FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelRna.Extensions.Hosting", "ExcelRna.Extensions.Hosting\ExcelRna.Extensions.Hosting.csproj", "{5777352D-8EC8-4E29-ABAA-785810F365FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDna.Extensions.Hosting.Tests", "ExcelDna.Extensions.Hosting.Tests\ExcelDna.Extensions.Hosting.Tests.csproj", "{AFFF726B-70C9-4F41-A437-3E50FCA1E1FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelRna.Extensions.Hosting.Tests", "ExcelRna.Extensions.Hosting.Tests\ExcelRna.Extensions.Hosting.Tests.csproj", "{AFFF726B-70C9-4F41-A437-3E50FCA1E1FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDna.Extensions.Hosting.IntelliSense", "ExcelDna.Extensions.Hosting.IntelliSense\ExcelDna.Extensions.Hosting.IntelliSense.csproj", "{974BD40B-9405-4B71-9282-AA5A8AED8F26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelRna.Extensions.Hosting.IntelliSense", "ExcelRna.Extensions.Hosting.IntelliSense\ExcelRna.Extensions.Hosting.IntelliSense.csproj", "{974BD40B-9405-4B71-9282-AA5A8AED8F26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{F9F626D5-3085-4574-AA20-5C1027378813}"
 EndProject
