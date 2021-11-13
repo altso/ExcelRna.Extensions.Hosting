@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <ExcelDnaAllowPackageReferenceProjectStyle>true</ExcelDnaAllowPackageReferenceProjectStyle>
-    <Description>Use Microsoft.Extensions.DependencyInjection in your Excel-DNA Add-In</Description>
     <PackageTags>excel;exceldna;excel-dna;dependency injection;Microsoft.Extensions;Microsoft.Extensions.DependencyInjection;Microsoft.Extensions.Hosting</PackageTags>
   </PropertyGroup>
 
@@ -15,7 +14,6 @@
   <ItemGroup>
     <PackageReference Include="ExcelDna.Registration" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
