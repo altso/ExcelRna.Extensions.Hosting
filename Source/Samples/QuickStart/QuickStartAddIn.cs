@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using ExcelDna.Integration;
 using ExcelDna.Integration.CustomUI;
+using ExcelDna.IntelliSense;
 using ExcelDna.Registration;
 using ExcelRna.Extensions.Hosting;
-using ExcelRna.Extensions.Hosting.IntelliSense;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -12,6 +12,10 @@ namespace QuickStart;
 
 public class QuickStartAddIn : HostedExcelAddIn
 {
+    protected override void AutoOpen(IHost host) => IntelliSenseServer.Install();
+
+    protected override void AutoClose(IHost host) => IntelliSenseServer.Uninstall();
+
     protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
         .ConfigureServices(services =>
         {
@@ -25,8 +29,6 @@ public class QuickStartAddIn : HostedExcelAddIn
             services.AddExcelRibbon<QuickStartRibbon>();
 
             services.AddExcelFunctions<QuickStartFunctions>();
-
-            services.AddExcelIntelliSenseServer();
         });
 }
 
