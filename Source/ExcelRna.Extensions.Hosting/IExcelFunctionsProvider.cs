@@ -7,7 +7,7 @@ using ExcelDna.Integration;
 using ExcelDna.Registration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 internal interface IExcelFunctionsProvider
 {

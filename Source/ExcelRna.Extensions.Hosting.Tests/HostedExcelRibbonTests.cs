@@ -3,7 +3,7 @@ using System.Reflection;
 using ExcelDna.Integration.CustomUI;
 using Xunit;
 
-namespace ExcelDna.Extensions.Hosting.Tests;
+namespace ExcelRna.Extensions.Hosting.Tests;
 
 public class HostedExcelRibbonTests
 {

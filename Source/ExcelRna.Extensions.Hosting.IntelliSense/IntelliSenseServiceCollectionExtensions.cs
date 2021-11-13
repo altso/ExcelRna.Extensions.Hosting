@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExcelDna.Extensions.Hosting.IntelliSense;
+namespace ExcelRna.Extensions.Hosting.IntelliSense;
 
 public static class IntelliSenseServiceCollectionExtensions
 {

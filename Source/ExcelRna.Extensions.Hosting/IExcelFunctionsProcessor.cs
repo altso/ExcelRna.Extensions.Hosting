@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using ExcelDna.Registration;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 internal interface IExcelFunctionsProcessor
 {

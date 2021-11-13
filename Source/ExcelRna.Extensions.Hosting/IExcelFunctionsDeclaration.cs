@@ -1,6 +1,6 @@
 using System;
 
-namespace ExcelDna.Extensions.Hosting;
+namespace ExcelRna.Extensions.Hosting;
 
 internal interface IExcelFunctionsDeclaration
 {

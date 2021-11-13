@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ExcelDna.Extensions.Hosting;
-using ExcelDna.Extensions.Hosting.IntelliSense;
 using ExcelDna.Integration;
 using ExcelDna.Integration.CustomUI;
 using ExcelDna.Registration;
+using ExcelRna.Extensions.Hosting;
+using ExcelRna.Extensions.Hosting.IntelliSense;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

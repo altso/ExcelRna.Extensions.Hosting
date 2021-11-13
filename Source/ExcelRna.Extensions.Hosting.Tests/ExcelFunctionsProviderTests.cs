@@ -7,7 +7,7 @@ using ExcelDna.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace ExcelDna.Extensions.Hosting.Tests;
+namespace ExcelRna.Extensions.Hosting.Tests;
 
 public class ExcelFunctionsProviderTests
 {
