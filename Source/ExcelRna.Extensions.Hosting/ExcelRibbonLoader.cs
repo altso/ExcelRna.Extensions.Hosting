@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +16,13 @@ internal class ExcelRibbonLoader : IHostedService
         _excelRibbons = excelRibbons;
     }
 
+    internal Action<ExcelComAddIn> LoadComAddIn { get; set; } = ExcelComAddInHelper.LoadComAddIn;
+
     public Task StartAsync(CancellationToken cancellationToken)
     {
         foreach (HostedExcelRibbon excelRibbon in _excelRibbons)
         {
-            ExcelComAddInHelper.LoadComAddIn(excelRibbon);
+            LoadComAddIn(excelRibbon);
         }
 
         return Task.CompletedTask;
