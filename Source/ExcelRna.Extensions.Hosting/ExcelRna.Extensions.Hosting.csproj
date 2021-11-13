@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <ExcelDnaAllowPackageReferenceProjectStyle>true</ExcelDnaAllowPackageReferenceProjectStyle>
+    <Description>Use Microsoft.Extensions.DependencyInjection in your Excel-DNA Add-In</Description>
+    <PackageTags>excel;exceldna;excel-dna;dependency injection;Microsoft.Extensions;Microsoft.Extensions.DependencyInjection;Microsoft.Extensions.Hosting</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
