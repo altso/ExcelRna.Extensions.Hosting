@@ -12,13 +12,13 @@ internal class ExcelFunctionsRegistrar : IHostedService
     private readonly IExcelFunctionsProvider _excelFunctionsProvider;
     private readonly IExcelFunctionsProcessor _excelFunctionsProcessor;
 
-    internal Action<IEnumerable<ExcelFunctionRegistration>> RegisterFunctions { get; set; } = functions => functions.RegisterFunctions();
-
     public ExcelFunctionsRegistrar(IExcelFunctionsProvider excelFunctionsProvider, IExcelFunctionsProcessor excelFunctionsProcessor)
     {
         _excelFunctionsProvider = excelFunctionsProvider;
         _excelFunctionsProcessor = excelFunctionsProcessor;
     }
+
+    internal Action<IEnumerable<ExcelFunctionRegistration>> RegisterFunctions { get; set; } = functions => functions.RegisterFunctions();
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
