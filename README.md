@@ -148,5 +148,5 @@ You can use msbuild target to automatically register all dependencies. See [disc
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/altso/ExcelRna.Extensions.Hosting/blob/main/LICENSE)
 
