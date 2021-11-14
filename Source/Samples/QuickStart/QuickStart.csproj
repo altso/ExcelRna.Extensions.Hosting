@@ -8,12 +8,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ExcelRna.Extensions.Hosting\ExcelRna.Extensions.Hosting.csproj" />
+    <ProjectReference Include="..\..\ExcelRna.Extensions.Logging\ExcelRna.Extensions.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ExcelDna.AddIn" Version="1.5.0" />
     <PackageReference Include="ExcelDna.IntelliSense" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.TraceSource" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,12 +1,15 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Forms;
+﻿using System;
+using System.Runtime.InteropServices;
 using ExcelDna.Integration;
 using ExcelDna.Integration.CustomUI;
 using ExcelDna.IntelliSense;
+using ExcelDna.Logging;
 using ExcelDna.Registration;
 using ExcelRna.Extensions.Hosting;
+using ExcelRna.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace QuickStart;
 
@@ -17,6 +20,7 @@ public class QuickStartAddIn : HostedExcelAddIn
     protected override void AutoClose(IHost host) => IntelliSenseServer.Uninstall();
 
     protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
+        .ConfigureLogging(logging => { logging.AddLogDisplay(); })
         .ConfigureServices(services =>
         {
             services.AddTransient<IQuickStartService, QuickStartService>();
@@ -56,8 +60,13 @@ public class QuickStartFunctions
 public class QuickStartRibbon : HostedExcelRibbon
 {
     private readonly IQuickStartService _quickStartService;
+    private readonly ILogger<QuickStartRibbon> _logger;
 
-    public QuickStartRibbon(IQuickStartService quickStartService) => _quickStartService = quickStartService;
+    public QuickStartRibbon(IQuickStartService quickStartService, ILogger<QuickStartRibbon> logger)
+    {
+        _quickStartService = quickStartService;
+        _logger = logger;
+    }
 
     public override string GetCustomUI(string ribbonId)
     {
@@ -68,6 +77,7 @@ public class QuickStartRibbon : HostedExcelRibbon
       <tab id='tab1' label='Quick Start'>
         <group id='group1' label='Hosting'>
           <button id='button1' label='Say Hello' tag='Ribbon' onAction='OnButtonPressed'/>
+          <button id='button2' label='Show Log Display' onAction='OnLogDisplay'/>
         </group >
       </tab>
     </tabs>
@@ -76,5 +86,7 @@ public class QuickStartRibbon : HostedExcelRibbon
 ";
     }
 
-    public void OnButtonPressed(IRibbonControl control) => MessageBox.Show(_quickStartService.SayHello(control.Tag));
+    public void OnButtonPressed(IRibbonControl control) => _logger.LogInformation(new StackOverflowException(), _quickStartService.SayHello(control.Tag));
+
+    public void OnLogDisplay(IRibbonControl control) => LogDisplay.Show();
 }
