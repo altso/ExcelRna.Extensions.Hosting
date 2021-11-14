@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <ExcelDnaAllowPackageReferenceProjectStyle>true</ExcelDnaAllowPackageReferenceProjectStyle>
+    <Description>This package integrates Microsoft.Extensions.* libraries (dependency injection, configuration, logging, etc.) with ExcelDna.AddIn</Description>
     <PackageTags>excel;exceldna;excel-dna;dependency injection;Microsoft.Extensions;Microsoft.Extensions.DependencyInjection;Microsoft.Extensions.Hosting</PackageTags>
   </PropertyGroup>
 
