@@ -7,7 +7,7 @@ namespace ExcelRna.Extensions.Logging;
 /// <summary>
 /// A logger that writes messages LogDisplay window.
 /// </summary>
-internal class LogDisplayLogger : ILogger
+internal sealed class LogDisplayLogger : ILogger
 {
     private readonly string _name;
 
@@ -20,7 +20,7 @@ internal class LogDisplayLogger : ILogger
         _name = name;
     }
 
-    internal virtual Action<string, string[]> RecordLine { get; set; } = LogDisplay.RecordLine;
+    internal Action<string, string[]> RecordLine { get; set; } = LogDisplay.RecordLine;
 
     /// <inheritdoc />
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
