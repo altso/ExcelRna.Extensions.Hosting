@@ -91,17 +91,17 @@ public class QuickStartRibbon : HostedExcelRibbon
     public override string GetCustomUI(string ribbonId)
     {
         return @"
-            <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui'>
+        <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui'>
             <ribbon>
                 <tabs>
-                <tab id='tab1' label='Quick Start'>
-                    <group id='group1' label='Hosting'>
-                    <button id='button1' label='Say Hello' tag='Ribbon' onAction='OnButtonPressed'/>
-                    </group >
-                </tab>
+                    <tab id='tab1' label='Quick Start'>
+                        <group id='group1' label='Hosting'>
+                            <button id='button1' label='Say Hello' tag='Ribbon' onAction='OnButtonPressed'/>
+                        </group >
+                    </tab>
                 </tabs>
             </ribbon>
-            </customUI>
+        </customUI>
         ";
     }
 
