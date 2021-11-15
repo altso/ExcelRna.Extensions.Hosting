@@ -15,12 +15,18 @@ internal sealed class LogDisplayLogger : ILogger
     /// Initializes a new instance of the <see cref="LogDisplayLogger"/> class.
     /// </summary>
     /// <param name="name">The name of the logger.</param>
-    public LogDisplayLogger(string name)
+    /// <param name="options">The options of the logger.</param>
+    public LogDisplayLogger(string name, LogDisplayLoggerOptions? options = null)
     {
         _name = name;
+        Options = options ?? new LogDisplayLoggerOptions();
     }
 
     internal Action<string, string[]> RecordLine { get; set; } = LogDisplay.RecordLine;
+
+    internal Action Show { get; set; } = LogDisplay.Show;
+
+    internal LogDisplayLoggerOptions Options { get; set; }
 
     /// <inheritdoc />
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
@@ -56,5 +62,10 @@ internal sealed class LogDisplayLogger : ILogger
         }
 
         RecordLine(message, Array.Empty<string>());
+
+        if (logLevel >= Options.AutoShowLogDisplayThreshold)
+        {
+            Show();
+        }
     }
 }

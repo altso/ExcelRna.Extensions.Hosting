@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using ExcelDna.Integration;
 using ExcelDna.Integration.CustomUI;
 using ExcelDna.IntelliSense;
@@ -86,7 +85,7 @@ public class QuickStartRibbon : HostedExcelRibbon
 ";
     }
 
-    public void OnButtonPressed(IRibbonControl control) => _logger.LogInformation(new StackOverflowException(), _quickStartService.SayHello(control.Tag));
+    public void OnButtonPressed(IRibbonControl control) => _logger.LogInformation(_quickStartService.SayHello(control.Tag));
 
     public void OnLogDisplay(IRibbonControl control) => LogDisplay.Show();
 }
