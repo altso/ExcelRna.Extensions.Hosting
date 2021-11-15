@@ -40,9 +40,10 @@ public class LogDisplayLoggerTests
     public void Log_is_noop_when_not_enabled()
     {
         // ARRANGE
-        var logger = new LogDisplayLogger("Test");
-        var recordLine = new Mock<Action<string, string[]>>(MockBehavior.Strict);
-        logger.RecordLine = recordLine.Object;
+        var logger = new LogDisplayLogger("Test")
+        {
+            RecordLine = Mock.Of<Action<string, string[]>>(MockBehavior.Strict),
+        };
 
         // ACT
         logger.Log(LogLevel.None, "TestMessage");
@@ -52,9 +53,10 @@ public class LogDisplayLoggerTests
     public void Log_is_noop_when_message_is_empty()
     {
         // ARRANGE
-        var logger = new LogDisplayLogger("Test");
-        var recordLine = new Mock<Action<string, string[]>>(MockBehavior.Strict);
-        logger.RecordLine = recordLine.Object;
+        var logger = new LogDisplayLogger("Test")
+        {
+            RecordLine = Mock.Of<Action<string, string[]>>(MockBehavior.Strict),
+        };
 
         // ACT
         logger.Log(LogLevel.Information, "");
@@ -64,9 +66,10 @@ public class LogDisplayLoggerTests
     public void Log_throws_when_formatter_is_null()
     {
         // ARRANGE
-        var logger = new LogDisplayLogger("Test");
-        var recordLine = new Mock<Action<string, string[]>>(MockBehavior.Strict);
-        logger.RecordLine = recordLine.Object;
+        var logger = new LogDisplayLogger("Test")
+        {
+            RecordLine = Mock.Of<Action<string, string[]>>(MockBehavior.Strict),
+        };
 
         // ACT & ASSERT
         Assert.Throws<ArgumentNullException>(() => logger.Log(LogLevel.Information, 0, "State", null, null!));
@@ -76,14 +79,34 @@ public class LogDisplayLoggerTests
     public void Log_includes_exception()
     {
         // ARRANGE
-        var logger = new LogDisplayLogger("Test");
-        var recordLine = new Mock<Action<string, string[]>>(MockBehavior.Strict);
-        recordLine.Setup(invoke => invoke(
+        var logger = new LogDisplayLogger("Test")
+        {
+            RecordLine = Mock.Of<Action<string, string[]>>(),
+        };
+
+        // ACT
+        logger.Log(LogLevel.Information, new Exception("TestException"), "TestMessage");
+
+        // ASSERT
+        Mock.Get(logger.RecordLine).Verify(invoke => invoke(
             It.Is<string>(s => s.Contains("TestMessage") && s.Contains("TestException")),
-            It.Is<string[]>(p => p.Length == 0)));
-        logger.RecordLine = recordLine.Object;
+            It.Is<string[]>(p => p.Length == 0)), Times.Once);
+    }
+
+    [Fact]
+    public void Log_auto_shows_LogDisplay()
+    {
+        // ARRANGE
+        var logger = new LogDisplayLogger("Test")
+        {
+            RecordLine = Mock.Of<Action<string, string[]>>(),
+            Show = Mock.Of<Action>(),
+        };
 
         // ACT
         logger.Log(LogLevel.Error, new Exception("TestException"), "TestMessage");
+
+        // ASSERT
+        Mock.Get(logger.Show).Verify(invoke => invoke(), Times.Once);
     }
 }
