@@ -22,6 +22,8 @@ public class LogDisplayLoggerProvider : ILoggerProvider
         _optionsReloadToken = options.OnChange(ReloadOptions);
     }
 
+    internal LogDisplayLoggerOptions Options => _options.CurrentValue;
+
     /// <inheritdoc />
     public ILogger CreateLogger(string name)
     {
