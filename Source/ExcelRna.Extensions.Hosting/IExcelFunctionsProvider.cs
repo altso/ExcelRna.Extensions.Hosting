@@ -46,6 +46,8 @@ internal class ExcelFunctionsProvider : IExcelFunctionsProvider
             excelFunctionAttribute.Name ??= lambda.Name;
             var parameters = methodInfo.GetParameters().Select(p => new ExcelParameterRegistration(p));
             registration = new ExcelFunctionRegistration(lambda, excelFunctionAttribute, parameters);
+            registration.CustomAttributes.AddRange(methodInfo.GetCustomAttributes(true).Where(a => a is not ExcelFunctionAttribute));
+            registration.ReturnRegistration.CustomAttributes.AddRange(methodInfo.ReturnParameter.GetCustomAttributes(true));
             return true;
         }
 
