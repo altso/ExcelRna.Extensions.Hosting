@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
@@ -24,6 +26,19 @@ public class HostedExcelAddInTests
         Assert.False(testExcelAddIn.IsRunning);
     }
 
+    [Fact]
+    public void HostedExcelAddIn_should_call_OnException()
+    {
+        // ARRANGE
+        var invalidExcelAddIn = new InvalidExcelAddIn();
+        IExcelAddIn addIn = invalidExcelAddIn;
+
+        // ACT & ASSERT
+        Assert.Throws<ApplicationException>(addIn.AutoOpen);
+        Assert.Throws<AggregateException>(addIn.AutoClose);
+        Assert.Equal(2, invalidExcelAddIn.Exceptions.Count);
+    }
+
     private class TestExcelAddIn : HostedExcelAddIn, IHostedService
     {
         public bool IsRunning { get; private set; }
@@ -42,5 +57,23 @@ public class HostedExcelAddInTests
 
         protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
             .ConfigureServices(services => services.AddHostedService(_ => this));
+    }
+
+    private class InvalidExcelAddIn : HostedExcelAddIn, IHostedService
+    {
+        public List<Exception> Exceptions { get; } = new();
+
+        public Task StartAsync(CancellationToken cancellationToken) => throw new ApplicationException();
+
+        public Task StopAsync(CancellationToken cancellationToken) => throw new ApplicationException();
+
+        protected override IHostBuilder CreateHostBuilder() => new HostBuilder()
+            .ConfigureServices(services => services.AddHostedService(_ => this));
+
+        protected override void OnException(Exception e)
+        {
+            base.OnException(e);
+            Exceptions.Add(e);
+        }
     }
 }
