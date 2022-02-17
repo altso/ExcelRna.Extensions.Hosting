@@ -1,4 +1,6 @@
-﻿using ExcelDna.Integration;
+﻿using System;
+using System.Diagnostics;
+using ExcelDna.Integration;
 using Microsoft.Extensions.Hosting;
 
 namespace ExcelRna.Extensions.Hosting;
@@ -15,19 +17,40 @@ public abstract class HostedExcelAddIn : IExcelAddIn
     {
     }
 
+    protected virtual void OnException(Exception e)
+    {
+        Debug.WriteLine(e);
+    }
+
     protected abstract IHostBuilder CreateHostBuilder();
 
     void IExcelAddIn.AutoOpen()
     {
-        _host = CreateHostBuilder().Build();
-        _host.StartAsync().GetAwaiter().GetResult();
-        AutoOpen(_host);
+        try
+        {
+            _host = CreateHostBuilder().Build();
+            _host.StartAsync().GetAwaiter().GetResult();
+            AutoOpen(_host);
+        }
+        catch (Exception e)
+        {
+            OnException(e);
+            throw;
+        }
     }
 
     void IExcelAddIn.AutoClose()
     {
-        AutoClose(_host);
-        _host.StopAsync().GetAwaiter().GetResult();
-        _host.Dispose();
+        try
+        {
+            AutoClose(_host);
+            _host.StopAsync().GetAwaiter().GetResult();
+            _host.Dispose();
+        }
+        catch (Exception e)
+        {
+            OnException(e);
+            throw;
+        }
     }
 }
