@@ -42,7 +42,7 @@ public class LogDisplayLoggerTests
         // ARRANGE
         var logger = new LogDisplayLogger("Test")
         {
-            RecordLine = Mock.Of<Action<string, string[]>>(MockBehavior.Strict),
+            RecordLine = Mock.Of<Action<string, object[]>>(MockBehavior.Strict),
         };
 
         // ACT
@@ -55,7 +55,7 @@ public class LogDisplayLoggerTests
         // ARRANGE
         var logger = new LogDisplayLogger("Test")
         {
-            RecordLine = Mock.Of<Action<string, string[]>>(MockBehavior.Strict),
+            RecordLine = Mock.Of<Action<string, object[]>>(MockBehavior.Strict),
         };
 
         // ACT
@@ -68,7 +68,7 @@ public class LogDisplayLoggerTests
         // ARRANGE
         var logger = new LogDisplayLogger("Test")
         {
-            RecordLine = Mock.Of<Action<string, string[]>>(MockBehavior.Strict),
+            RecordLine = Mock.Of<Action<string, object[]>>(MockBehavior.Strict),
         };
 
         // ACT & ASSERT
@@ -79,34 +79,96 @@ public class LogDisplayLoggerTests
     public void Log_includes_exception()
     {
         // ARRANGE
-        var logger = new LogDisplayLogger("Test")
+        var logger = new LogDisplayLogger("Test", new LogDisplayLoggerOptions
         {
-            RecordLine = Mock.Of<Action<string, string[]>>(),
+            TimestampFormat = "G",
+        })
+        {
+            RecordLine = Mock.Of<Action<string, object[]>>(),
         };
 
         // ACT
-        logger.Log(LogLevel.Information, new Exception("TestException"), "TestMessage");
+        logger.Log(LogLevel.Debug, new Exception("TestException"), "TestMessage");
 
         // ASSERT
         Mock.Get(logger.RecordLine).Verify(invoke => invoke(
             It.Is<string>(s => s.Contains("TestMessage") && s.Contains("TestException")),
-            It.Is<string[]>(p => p.Length == 0)), Times.Once);
+            It.Is<object[]>(p => p.Length == 0)), Times.Once);
     }
 
     [Fact]
-    public void Log_auto_shows_LogDisplay()
+    public void Log_includes_timestamp()
+    {
+        // ARRANGE
+        var logger = new LogDisplayLogger("Test", new LogDisplayLoggerOptions
+        {
+            TimestampFormat = "yyyy-MM-dd HH:mm:ss ",
+        })
+        {
+            RecordLine = Mock.Of<Action<string, object[]>>(),
+            GetCurrentTimestamp = () => new DateTimeOffset(2023, 04, 17, 13, 34, 00, TimeSpan.Zero),
+        };
+
+        // ACT
+        logger.Log(LogLevel.Trace, new Exception("TestException"), "TestMessage");
+
+        // ASSERT
+        Mock.Get(logger.RecordLine).Verify(invoke => invoke(
+            It.Is<string>(s => s.Contains("2023-04-17 13:34:00")),
+            It.Is<object[]>(p => p.Length == 0)), Times.Once);
+    }
+
+
+    [Theory]
+    [InlineData(LogLevel.Error)]
+    [InlineData(LogLevel.Critical)]
+    public void Log_auto_shows_LogDisplay(LogLevel level)
     {
         // ARRANGE
         var logger = new LogDisplayLogger("Test")
         {
-            RecordLine = Mock.Of<Action<string, string[]>>(),
+            RecordLine = Mock.Of<Action<string, object[]>>(),
             Show = Mock.Of<Action>(),
         };
 
         // ACT
-        logger.Log(LogLevel.Error, new Exception("TestException"), "TestMessage");
+        logger.Log(level, new Exception("TestException"), "TestMessage");
 
         // ASSERT
         Mock.Get(logger.Show).Verify(invoke => invoke(), Times.Once);
+    }
+
+    [Theory]
+    [InlineData(LogLevel.Trace)]
+    [InlineData(LogLevel.Debug)]
+    [InlineData(LogLevel.Information)]
+    [InlineData(LogLevel.Warning)]
+    public void Log_does_not_show_LogDisplay(LogLevel level)
+    {
+        // ARRANGE
+        var logger = new LogDisplayLogger("Test")
+        {
+            RecordLine = Mock.Of<Action<string, object[]>>(),
+            Show = Mock.Of<Action>(),
+        };
+
+        // ACT
+        logger.Log(level, new Exception("TestException"), "TestMessage");
+
+        // ASSERT
+        Mock.Get(logger.Show).Verify(invoke => invoke(), Times.Never);
+    }
+
+    [Fact]
+    public void Log_throws_when_logLevel_is_wrong()
+    {
+        // ARRANGE
+        var logger = new LogDisplayLogger("Test");
+
+        // ACT & ASSERT
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            logger.Log((LogLevel)100, new Exception("TestException"), "TestMessage");
+        });
     }
 }
