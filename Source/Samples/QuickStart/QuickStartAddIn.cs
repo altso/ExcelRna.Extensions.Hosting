@@ -19,7 +19,13 @@ public class QuickStartAddIn : HostedExcelAddIn
     protected override void AutoClose(IHost host) => IntelliSenseServer.Uninstall();
 
     protected override IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder()
-        .ConfigureLogging(logging => { logging.AddLogDisplay(); })
+        .ConfigureLogging(logging =>
+        {
+            logging.AddLogDisplay(options =>
+        {
+            options.TimestampFormat = "G";
+        });
+        })
         .ConfigureServices(services =>
         {
             services.AddTransient<IQuickStartService, QuickStartService>();

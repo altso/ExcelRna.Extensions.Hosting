@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using ExcelDna.Logging;
 using Microsoft.Extensions.Logging;
 
@@ -22,11 +23,13 @@ internal sealed class LogDisplayLogger : ILogger
         Options = options ?? new LogDisplayLoggerOptions();
     }
 
-    internal Action<string, string[]> RecordLine { get; set; } = LogDisplay.RecordLine;
+    internal Action<string, object[]> RecordLine { get; set; } = LogDisplay.RecordLine;
 
     internal Action Show { get; set; } = LogDisplay.Show;
 
     internal LogDisplayLoggerOptions Options { get; set; }
+
+    internal Func<DateTimeOffset> GetCurrentTimestamp { get; set; } = () => DateTimeOffset.Now;
 
     /// <inheritdoc />
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
@@ -35,7 +38,8 @@ internal sealed class LogDisplayLogger : ILogger
     public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
 
     /// <inheritdoc />
-    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+        Func<TState, Exception?, string> formatter)
     {
         if (!IsEnabled(logLevel))
         {
@@ -54,18 +58,46 @@ internal sealed class LogDisplayLogger : ILogger
             return;
         }
 
-        message = $"{_name} [{logLevel}] {message}";
+        StringBuilder builder = new();
+
+        if (Options.TimestampFormat != null)
+        {
+            DateTimeOffset dateTimeOffset = GetCurrentTimestamp();
+            builder.Append(dateTimeOffset.ToString(Options.TimestampFormat));
+            builder.Append(" ");
+        }
+
+        builder.Append(GetLogLevelString(logLevel));
+        builder.Append(": ");
+        builder.Append(_name);
+        builder.Append(" ");
+        builder.Append(message);
 
         if (exception != null)
         {
-            message += Environment.NewLine + exception;
+            builder.AppendLine();
+            builder.Append(exception);
         }
 
-        RecordLine(message, Array.Empty<string>());
+        RecordLine(builder.ToString(), Array.Empty<object>());
 
         if (logLevel >= Options.AutoShowLogDisplayThreshold)
         {
             Show();
         }
+    }
+
+    private static string GetLogLevelString(LogLevel logLevel)
+    {
+        return logLevel switch
+        {
+            LogLevel.Trace => "trce",
+            LogLevel.Debug => "dbug",
+            LogLevel.Information => "info",
+            LogLevel.Warning => "warn",
+            LogLevel.Error => "fail",
+            LogLevel.Critical => "crit",
+            _ => throw new ArgumentOutOfRangeException(nameof(logLevel))
+        };
     }
 }
