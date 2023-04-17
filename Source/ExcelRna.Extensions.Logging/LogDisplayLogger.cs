@@ -67,10 +67,11 @@ internal sealed class LogDisplayLogger : ILogger
             builder.Append(" ");
         }
 
-        builder.Append(GetLogLevelString(logLevel));
-        builder.Append(": ");
+        builder.Append("[");
+        builder.Append(logLevel);
+        builder.Append("] ");
         builder.Append(_name);
-        builder.Append(" ");
+        builder.Append(": ");
         builder.Append(message);
 
         if (exception != null)
@@ -85,19 +86,5 @@ internal sealed class LogDisplayLogger : ILogger
         {
             Show();
         }
-    }
-
-    private static string GetLogLevelString(LogLevel logLevel)
-    {
-        return logLevel switch
-        {
-            LogLevel.Trace => "trce",
-            LogLevel.Debug => "dbug",
-            LogLevel.Information => "info",
-            LogLevel.Warning => "warn",
-            LogLevel.Error => "fail",
-            LogLevel.Critical => "crit",
-            _ => throw new ArgumentOutOfRangeException(nameof(logLevel))
-        };
     }
 }

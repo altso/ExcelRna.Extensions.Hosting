@@ -102,7 +102,7 @@ public class LogDisplayLoggerTests
         // ARRANGE
         var logger = new LogDisplayLogger("Test", new LogDisplayLoggerOptions
         {
-            TimestampFormat = "yyyy-MM-dd HH:mm:ss ",
+            TimestampFormat = "yyyy-MM-dd HH:mm:ss",
         })
         {
             RecordLine = Mock.Of<Action<string, object[]>>(),
@@ -157,18 +157,5 @@ public class LogDisplayLoggerTests
 
         // ASSERT
         Mock.Get(logger.Show).Verify(invoke => invoke(), Times.Never);
-    }
-
-    [Fact]
-    public void Log_throws_when_logLevel_is_wrong()
-    {
-        // ARRANGE
-        var logger = new LogDisplayLogger("Test");
-
-        // ACT & ASSERT
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            logger.Log((LogLevel)100, new Exception("TestException"), "TestMessage");
-        });
     }
 }
