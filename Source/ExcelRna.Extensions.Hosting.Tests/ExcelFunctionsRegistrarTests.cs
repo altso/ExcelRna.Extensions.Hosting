@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ExcelDna.Registration;
 using Moq;
 using Xunit;
 
@@ -13,7 +15,11 @@ public class ExcelFunctionsRegistrarTests
         // ARRANGE
         var excelFunctionsProvider = new Mock<IExcelFunctionsProvider>();
         bool registered = false;
-        ExcelFunctionsRegistrar excelFunctionsRegistrar = new(excelFunctionsProvider.Object, new NoopExcelFunctionsProcessor()) { RegisterFunctions = _ => { registered = true; } };
+        ExcelFunctionsRegistrar excelFunctionsRegistrar =
+            new(excelFunctionsProvider.Object, new[] { new TestProcessor() })
+            {
+                RegisterFunctions = _ => { registered = true; }
+            };
 
         // ACT
         await excelFunctionsRegistrar.StartAsync(CancellationToken.None);
@@ -27,12 +33,19 @@ public class ExcelFunctionsRegistrarTests
     {
         // ARRANGE
         var excelFunctionsProvider = new Mock<IExcelFunctionsProvider>();
-        ExcelFunctionsRegistrar excelFunctionsRegistrar = new(excelFunctionsProvider.Object, new NoopExcelFunctionsProcessor());
+        ExcelFunctionsRegistrar excelFunctionsRegistrar =
+            new(excelFunctionsProvider.Object, new[] { new TestProcessor() });
 
         // ACT
         Task stopTask = excelFunctionsRegistrar.StopAsync(CancellationToken.None);
 
         // ASSERT
         Assert.Equal(Task.CompletedTask, stopTask);
+    }
+
+    private class TestProcessor : IExcelFunctionsProcessor
+    {
+        public IEnumerable<ExcelFunctionRegistration> Process(IEnumerable<ExcelFunctionRegistration> registrations) =>
+            registrations;
     }
 }

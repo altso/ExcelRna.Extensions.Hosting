@@ -4,14 +4,9 @@ using ExcelDna.Registration;
 
 namespace ExcelRna.Extensions.Hosting;
 
-internal interface IExcelFunctionsProcessor
+public interface IExcelFunctionsProcessor
 {
     IEnumerable<ExcelFunctionRegistration> Process(IEnumerable<ExcelFunctionRegistration> registrations);
-}
-
-internal class NoopExcelFunctionsProcessor : IExcelFunctionsProcessor
-{
-    public IEnumerable<ExcelFunctionRegistration> Process(IEnumerable<ExcelFunctionRegistration> registrations) => registrations;
 }
 
 internal class ExcelFunctionsProcessor : IExcelFunctionsProcessor
