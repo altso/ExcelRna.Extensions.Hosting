@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExcelRna.Extensions.Hosting;
 
-internal interface IExcelFunctionsProvider
+public interface IExcelFunctionsProvider
 {
     IEnumerable<ExcelFunctionRegistration> GetExcelFunctions();
 }
