@@ -35,7 +35,7 @@ public class HostedExcelAddInTests
 
         // ACT & ASSERT
         Assert.Throws<ApplicationException>(addIn.AutoOpen);
-        Assert.Throws<AggregateException>(addIn.AutoClose);
+        Assert.Throws<ApplicationException>(addIn.AutoClose);
         Assert.Equal(2, invalidExcelAddIn.Exceptions.Count);
     }
 
