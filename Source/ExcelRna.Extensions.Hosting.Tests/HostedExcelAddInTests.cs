@@ -39,6 +39,39 @@ public class HostedExcelAddInTests
         Assert.Equal(2, invalidExcelAddIn.Exceptions.Count);
     }
 
+    [Fact]
+    public void HostedExcelAddIn_AutoClose_without_AutoOpen_should_not_throw()
+    {
+        // ARRANGE
+        var testExcelAddIn = new TestExcelAddIn();
+        IExcelAddIn addIn = testExcelAddIn;
+
+        // ACT
+        Exception? exception = Record.Exception(addIn.AutoClose);
+
+        // ASSERT
+        Assert.Null(exception);
+        Assert.False(testExcelAddIn.IsRunning);
+    }
+
+    [Fact]
+    public void HostedExcelAddIn_AutoClose_can_be_called_multiple_times()
+    {
+        // ARRANGE
+        var testExcelAddIn = new TestExcelAddIn();
+        IExcelAddIn addIn = testExcelAddIn;
+
+        addIn.AutoOpen();
+        addIn.AutoClose();
+
+        // ACT
+        Exception? exception = Record.Exception(addIn.AutoClose);
+
+        // ASSERT
+        Assert.Null(exception);
+        Assert.False(testExcelAddIn.IsRunning);
+    }
+
     private class TestExcelAddIn : HostedExcelAddIn, IHostedService
     {
         public bool IsRunning { get; private set; }

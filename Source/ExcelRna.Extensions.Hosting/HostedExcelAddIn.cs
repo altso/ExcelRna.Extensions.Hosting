@@ -43,9 +43,15 @@ public abstract class HostedExcelAddIn : IExcelAddIn
     {
         try
         {
+            if (_host == null)
+            {
+                return;
+            }
+
             AutoClose(_host);
             _host.StopAsync().GetAwaiter().GetResult();
             _host.Dispose();
+            _host = null;
         }
         catch (Exception e)
         {

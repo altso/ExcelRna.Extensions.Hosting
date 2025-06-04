@@ -55,6 +55,21 @@ public class LogDisplayLoggerProviderTests
         Assert.Equal(LogLevel.Trace, logger.Options.AutoShowLogDisplayThreshold);
     }
 
+    [Fact]
+    public void CreateLogger_returns_same_logger_for_same_name()
+    {
+        // ARRANGE
+        var optionsMonitor = Mock.Of<IOptionsMonitor<LogDisplayLoggerOptions>>(m => m.CurrentValue == new LogDisplayLoggerOptions());
+        var provider = new LogDisplayLoggerProvider(optionsMonitor);
+
+        // ACT
+        ILogger logger1 = provider.CreateLogger("Test");
+        ILogger logger2 = provider.CreateLogger("Test");
+
+        // ASSERT
+        Assert.Same(logger1, logger2);
+    }
+
     private class TestOptionsMonitor<TOptions> : IOptionsMonitor<TOptions>
         where TOptions : class, new()
     {
