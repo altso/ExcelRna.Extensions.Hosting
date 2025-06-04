@@ -66,7 +66,7 @@ public class QuickStartFunctions
     [ExcelFunction(Description = "Say hello to somebody")]
     public string SayHello(string name)
     {
-        _quickStartService.SayHello(name);
+        return _quickStartService.SayHello(name);
     }
 }
 ```
@@ -116,7 +116,7 @@ public class QuickStartRibbon : HostedExcelRibbon
 
 Derive a class from `HostedExcelAddIn` and implement `CreateHostBuilder` abstract method.
 Register your services, `ExcelFunction`s container classes, and `ExcelRibbon`s using `ConfigureServices` method.
-Here we use `Host.CreateDefaultBuilder()` from `Microsfot.Extensions.Hosting` (must be installed separately).
+Here we use `Host.CreateDefaultBuilder()` from `Microsoft.Extensions.Hosting` (must be installed separately).
 
 ```cs
 public class QuickStartAddIn : HostedExcelAddIn
